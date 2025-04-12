@@ -1,38 +1,108 @@
-.App {
-  text-align: center;
+
+:root{
+  --dark-blue:#0F1729;
+  --blue:#001138;
+  --light-blue:#1B2334;
+  --text-blue:#0A82FB;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+body{
+  background-color: var(--dark-blue);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.bg-dark{
+  background-color: var(--light-blue)!important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+
+
+a{
+  color: white!important;
+}
+
+.feature{
+  display: flex;
+  flex-direction: column;
+  background-color: var(--light-blue);
+  padding: 1.5rem;
+  border-radius: 15px;
+  margin-top: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.295);
+}
+
+.feature-icon{
+  color: var(--text-blue);
+  background-color: #323948;
+  
+}
+
+.home_match_card{
+  padding: 1rem;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.304);
+}
+
+.accordion-item {
+  background-color: transparent;
+  color: #ffffff;
+  border: none;
+}
+
+.accordion-button {
+  padding: 0.4rem 0.6rem;
+  font-size: 0.9rem;
+}
+
+.accordion-body {
+  padding: 0.5rem;
+}
+
+.table td, .table th {
+  padding: 0.4rem;
+}
+
+input , input::placeholder{
+  color:rgb(109, 109, 109)!important;
+}
+
+input{
+  background-color: var(--light-blue)!important;
+}
+
+.live-icon {
+  color: rgb(84, 165, 46);
+  animation: pulse 2s infinite;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+
+.table-primary{
+  --bs-table-bg: var(--light-blue);
+}
+
+
+
+@keyframes pulse {
+  0% {
+    opacity: 0.4;
   }
-  to {
-    transform: rotate(360deg);
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+
+
+
+
+@media screen and (max-width : 768px) {
+  .container{
+    max-width: 100%;
+    
+    padding: 0;
   }
 }
