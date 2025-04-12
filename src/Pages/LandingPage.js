@@ -68,7 +68,7 @@ const LandingPage = () => {
                         <h1 className="display-4 fw-bold">Stay Connected to <br></br> <span style={{ color: 'var(--text-blue)' }} >Every Match, Every Moment</span> </h1>
                         <p >Track live scores, statistics, and updates from football leagues around the world. Track live scores, statistics, and updates from football leagues around the world with our cutting-edge scoreboard platform.</p>
                         <div className="d-flex  gap-3 mt-4">
-                            <button className="btn btn-outline-primary" variant="light" as={Link} to="/dashboard/matches">Launch Dashboard</button>
+                            <a className="btn btn-outline-primary" href='/dashboard/matches'>Launch Dashboard</a>
                             <button className="btn btn-outline-primary" variant="outline-light" href="#features">Explore Features</button>
                         </div>
                     </div>
