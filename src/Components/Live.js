@@ -3,9 +3,20 @@ import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { fixtures } from "../data.js";
 import axios from "axios";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 
 const Live = () => {
-  const [selectedLeague, setSelectedLeague] = useState(null);
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000, // animation duration in ms
+      once: true,     // whether animation should happen only once
+    });
+  }, []);
+
+
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [fixtureData, setFixtureData] = useState(fixtures.response);
@@ -16,15 +27,6 @@ const Live = () => {
       fetchFixturesByDate(selectedDate);
     }
   }, [selectedDate]);
-
-  // const fetchFixturesByDate = async (date) => {
-  //   try {
-  //     const response = await axios.get(`https://api.football-data.com/fixtures?date=${date}`);
-  //     setFixtureData(response.data.response);
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // };
 
 
   const fetchFixturesByDate = async (date) => {
@@ -56,68 +58,72 @@ const Live = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        
+
       </div>
 
       {/* League Fixtures in Accordion */}
       <div className="accordion" id="fixturesAccordion">
         {leagues.slice(0, 15).map((league, index) => (
-          <div className=" mb-1 " key={index}>
-            <h2 className="accordion-header">
-              <div className="d-flex align-items-center gap-2 p-2 bg-dark text-light" style={{ fontSize: "0.9rem", cursor: "default" }}>
-                <img
-                  src={fixtureData.find((m) => m.league.name === league)?.league.logo}
-                  alt={league}
-                  width="25"
-                  className="me-2"
-                />
-                {league}
-              </div>
-            </h2>
-
-            <div className="accordion-body p-0 text-light">
-              <table className="table table-dark table-sm table-hover text-center mb-0">
-                <thead>
-                  <tr style={{ fontSize: "0.8rem" }}>
-                    <th>Match</th>
-                    <th>Score</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredFixtures
-                    .filter((match) => match.league.name === league)
-                    .map((match) => (
-                      <tr
-                        key={match.fixture.id}
-                        onClick={() => navigate(`/fixture/${match.fixture.id}`)}
-                        style={{ cursor: "pointer", fontSize: "0.85rem" }}
-                      >
-                        <td className="d-flex flex-column align-items-start gap-2">
-
-                          <div>
-                          
-                            {["1H", "2H", "ET"].includes(match.fixture.status?.short) && (
-                              <span className="live-icon">● LIVE</span>
-                            )}
-                          </div>
-
-                          <div className="d-flex align-items-center mb-1">
-                            <img src={match.teams.home.logo} alt={match.teams.home.name} width="20" className="me-2" />
-                            <span>{match.teams.home.name}</span>
-                          </div>
-                          <div className="d-flex align-items-center">
-                            <img src={match.teams.away.logo} alt={match.teams.away.name} width="20" className="me-2" />
-                            <span>{match.teams.away.name}</span>
-                          </div>
-                        </td>
-                        <td>
-                          <strong>{match.goals.home} - {match.goals.away}</strong>
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
+          <div key={index}>
+            <div className="d-flex align-items-center p-2 bg-dark text-light" style={{ fontSize: "0.9rem", cursor: "default" }}>
+              <img
+                src={fixtureData.find((m) => m.league.name === league)?.league.logo}
+                alt={league}
+                width="25"
+                className="me-2"
+              />
+              {league}
             </div>
+
+            <table className="table-hover text-center mb-0 w-100">
+
+              <tbody    >
+                {filteredFixtures
+                  .filter((match) => match.league.name === league)
+                  .map((match) => (
+                    <>
+                    
+                    <tr style={{textAlign:'start'}} >
+                      {["1H", "2H", "ET"].includes(match.fixture.status?.short) && (
+                            <span className="live-icon">● LIVE</span>
+                          )}
+                    </tr>
+                    <tr  data-aos="flip-up"
+                      key={match.fixture.id}
+
+                      onClick={() => navigate(`/dashboard/single`)}
+                      style={{ cursor: "pointer", fontSize: "0.85rem", borderBottom: '1px solid #ffffff1f' }}>
+                      <td className="p-2 d-flex flex-column align-items-start gap-1">
+
+                        {/* <tr>
+                          {["1H", "2H", "ET"].includes(match.fixture.status?.short) && (
+                            <span className="live-icon">● LIVE</span>
+                          )}
+                        </tr> */}
+
+                        <tr>
+                          <img src={match.teams.home.logo} alt={match.teams.home.name} width="20" className="me-2" />
+                          <span>{match.teams.home.name}</span>
+                        </tr>
+
+                        <tr>
+                          <img src={match.teams.away.logo} alt={match.teams.away.name} width="20" className="me-2" />
+                          <span>{match.teams.away.name}</span>
+                        </tr>
+
+
+                      </td>
+                      <td>
+                        <tr>sa</tr>
+                        <tr>sa</tr>
+                      </td>
+                    </tr>
+                    </>
+                  ))}
+              </tbody>
+
+            </table>
+
           </div>
         ))}
       </div>

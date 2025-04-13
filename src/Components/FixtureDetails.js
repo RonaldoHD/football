@@ -51,7 +51,7 @@ const FixtureDetails = () => {
 
 
 
-      <div className="card bg-dark text-white mb-4">
+      {/* <div className="card bg-dark text-white mb-4">
 
         <div className="card-body text-center">
           <p>{new Date(match.date).toLocaleString()}</p>
@@ -80,6 +80,28 @@ const FixtureDetails = () => {
         </div>
 
 
+      </div> */}
+
+
+
+      <div>
+        <p>{new Date(match.date).toLocaleString()}</p>
+
+        <div className="d-flex flex-row justify-content-between" >
+          <div>
+            <img src={teams.home.logo} alt={teams.home.name} width="70" style={{ background: 'white', borderRadius: '5px', padding: '7px' }} />
+            <p>{teams.home.name}</p>
+          </div>
+
+          <h2>{goals.home} - {goals.away}</h2>
+
+          <div>
+            <img src={teams.away.logo} alt={teams.away.name} width="70" style={{ background: 'white', borderRadius: '5px', padding: '7px' }} />
+            <p>{teams.away.name}</p>
+          </div>
+
+
+        </div>
       </div>
 
 

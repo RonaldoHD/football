@@ -5,8 +5,19 @@ import Slider from "react-slick";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 export default function Leagues() {
+
+useEffect(() => {
+      AOS.init({
+        duration: 1000, // animation duration in ms
+        once: true,     // whether animation should happen only once
+      });
+    }, []);
+
+
   const [leaguesData, setLeaguesData] = useState([]);
   const [selectedDate, setSelectedDate] = useState(dayjs());
 
@@ -32,9 +43,11 @@ export default function Leagues() {
 
   const selectedYear = selectedDate.year();
 
-  const filteredLeagues = leaguesData.filter((league) =>
-    league.seasons?.some((season) => season.year === selectedYear)
-  );
+  // const filteredLeagues = leaguesData.filter((league) =>
+  //   league.seasons?.some((season) => season.year === selectedYear)
+  // );
+
+  const filteredLeagues = leaguesData
 
   const filteredFavorites = filteredLeagues.filter((league) =>
     favoriteLeagues.some(
@@ -73,7 +86,7 @@ export default function Leagues() {
   return (
     <div>
       {/* React Slick Date Carousel */}
-      <div style={{ padding: "15px 10px", borderBottom: "1px solid #ccc", marginBottom: "20px" }}>
+      {/* <div style={{ padding: "15px 10px", borderBottom: "1px solid #ccc", marginBottom: "20px" }}>
         <Slider {...settings}>
           {dateList.map((date, index) => {
             const isSelected = date.isSame(selectedDate, "day");
@@ -96,7 +109,7 @@ export default function Leagues() {
             );
           })}
         </Slider>
-      </div>
+      </div> */}
 
       {/* Leagues Table */}
       <table className="w-100">
@@ -108,11 +121,11 @@ export default function Leagues() {
             </td>
           </tr>
           {filteredFavorites.map((league, index) => (
-            <tr key={`fav-${index}`}>
+            <tr key={`fav-${index}`} >
               <td>
-                <div style={{ padding: "10px 20px" }} className="d-flex flex-row gap-3">
+                <div data-aos="flip-up" style={{ padding: "5px 10px" }} className="d-flex flex-row gap-3">
                   <img
-                    width="40"
+                    width="30"
                     style={{ borderRadius: "15px" }}
                     src={league.country.flag}
                     alt={`${league.country.name} flag`}
@@ -136,11 +149,11 @@ export default function Leagues() {
             </td>
           </tr>
           {otherLeagues.slice(0, 30).map((league, index) => (
-            <tr key={`other-${index}`}>
-              <td>
-                <div style={{ padding: "10px 20px" }} className="d-flex flex-row gap-3">
+            <tr key={`other-${index}`} data-aos="flip-up">
+              <td  >
+                <div  style={{ padding: "5px 10px" }} className="d-flex flex-row gap-3">
                   <img
-                    width="40"
+                    width="30"
                     style={{ borderRadius: "15px" }}
                     src={league.country.flag}
                     alt={`${league.country.name} flag`}
