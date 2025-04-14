@@ -88,7 +88,7 @@ const Live = () => {
                             <span className="live-icon">● LIVE</span>
                           )}
                     </tr>
-                    <tr  data-aos="flip-up"
+                    <tr  data-aos="fade-in"
                       key={match.fixture.id}
 
                       onClick={() => navigate(`/dashboard/single`)}

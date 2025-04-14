@@ -1,9 +1,11 @@
 
 :root{
-  --dark-blue:#0F1729;
+  --dark-blue:#0a0f1a;
   --blue:#001138;
-  --light-blue:#1B2334;
+  /* --light-blue:#1B2334; */
+  --light-blue:rgb(28, 32, 51);
   --text-blue:#0A82FB;
+  --text-red:#cf3535;
 }
 
 body{
@@ -13,6 +15,10 @@ body{
 
 .bg-dark{
   background-color: var(--light-blue)!important;
+}
+
+.table>:not(caption)>*>*{
+  background-color: var(--light-blue);
 }
 
 
