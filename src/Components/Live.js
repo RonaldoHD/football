@@ -88,8 +88,7 @@ const Live = () => {
                             <span className="live-icon">● LIVE</span>
                           )}
                     </tr>
-                    <tr  data-aos="fade-in"
-                      key={match.fixture.id}
+                    <tr key={match.fixture.id}
 
                       onClick={() => navigate(`/dashboard/single`)}
                       style={{ cursor: "pointer", fontSize: "0.85rem", borderBottom: '1px solid #ffffff1f' }}>

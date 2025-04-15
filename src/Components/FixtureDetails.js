@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { singlefixture } from "../singleFixture.js";  // Importing the local file
 import "bootstrap/dist/css/bootstrap.min.css";
+import { RectangleVertical, ArrowLeftRight, Goal } from 'lucide-react';
 
 const FixtureDetails = () => {
   const { id } = useParams();
@@ -31,6 +32,27 @@ const FixtureDetails = () => {
 
   const { fixture: match, league, teams, goals, score, events } = fixture;
   const isLive = match.status.short === "1H" || match.status.short === "2H" || match.status.short === "ET";
+
+
+
+
+  const date = new Date(match.date);
+  const options = {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+    timeZone: 'Europe/Berlin'
+  };
+
+  const parts = date.toLocaleString('en-GB', options).split(', ');
+  const [day, month, year] = parts[0].split('/');
+  const time = parts[1];
+
+  const finalDate = `${day}.${month}.${year} ${time}`;
+
 
   return (
     <div className="container mt-1 text-light">
@@ -110,16 +132,17 @@ const FixtureDetails = () => {
               </td>
 
               {/* Score */}
-              <td
-                style={{
-                  fontSize: '1.8rem',
-                  fontWeight: '800',
-                  color: 'white',
-                  verticalAlign: 'middle',
-                  padding: '1rem 0.5rem',
-                }}
-              >
-                {goals.home} - {goals.away}
+              <td style={{
+                fontSize: '1.8rem',
+                fontWeight: '800',
+                color: 'white',
+                verticalAlign: 'middle',
+                padding: '1rem 0.5rem',
+              }}>
+                <p style={{ color: '#ffffff3b', fontWeight: '400', padding: 0 }} >{finalDate}</p>
+                <div >{goals.home} - {goals.away}</div>
+                <p className="pb-3">{fixture.fixture.status.long}</p>
+
               </td>
 
               {/* Away Team */}
@@ -137,19 +160,19 @@ const FixtureDetails = () => {
             </tr>
           </tbody>
 
-          <tfoot>
-            <tr style={{ borderTop: '1px solid #444' }}>
-              <td colSpan="3" className="text-start text-light p-3">
-                {new Date(match.date).toLocaleString()}
-              </td>
-            </tr>
-          </tfoot>
+
         </table>
       </div>
 
 
+      <div>
+        <div className='w-100 bg-dark p-2 mb-4' >ODDS</div><div>
+          
+        </div>
+      </div>
 
-      <div className="container mt-4">
+
+
         {/* Pills Navigation */}
         <ul className="nav nav-pills mb-3" role="tablist">
           <li className="nav-item" role="presentation">
@@ -189,27 +212,84 @@ const FixtureDetails = () => {
         </ul>
 
         {/* Pills Content */}
-        <div className="tab-content p-1 border rounded ">
+        <div className="tab-content rounded ">
+
+
+
+
           {activeTab === 'events' && (
-            <div className="tab-pane fade show active">
+
+            <div className="football-events-table">
               {events?.length > 0 && (
-               
-                  <ul className="list-group list-group-flush">
-                    {events.map((event, idx) => (
-                      <li key={idx} className="list-group-item bg-dark text-white d-flex justify-content-between align-items-center">
-                        <div>
-                          <img src={event.team.logo} alt={event.team.name} width="20" className="me-2" />
-                          <strong>{event.team.name}</strong> - {event.player.name}
-                          {event.detail && <> ({event.detail})</>}
+                <>
+                  {[...new Set(events.map(e => e.team.name))].map((teamName) => {
+                    const teamEvents = events.filter(e => e.team.name === teamName);
+                    const teamLogo = teamEvents[0]?.team.logo;
+
+                    return (
+                      <div key={teamName} className="team-section mb-4">
+                        <div className="bg-dark  d-flex align-items-center mb-2 p-2 w-100">
+                          <img src={teamLogo} alt={teamName} width="24" className="me-2" />
+                          <h5 className="m-0 text-neon">{teamName}</h5>
                         </div>
-                        <span>{event.time.elapsed}'</span>
-                      </li>
-                    ))}
-                  </ul>
-              
+                        <div className="table-responsive">
+                          <table className="table-hover mb-0 w-100">
+                            <tbody>
+                              {teamEvents.map((event, idx) => {
+                                const detail = event.detail?.toLowerCase() || '';
+
+                                return (
+                                  <tr key={idx} className="event-row" style={{borderBottom:'1px solid #444444'}} >
+                                    <td className="player-info py-2">
+                                      <p className="m-0">{event.player.name}</p>
+                                    </td>
+
+                                    <td className="detail-info">
+                                      {detail.includes('yellow') ? (
+                                        <span className="neon-badge yellow">🟨 Card</span>
+                                      ) : detail.includes('red') ? (
+                                        <span className="neon-badge red">🟥 Card</span>
+                                      ) : detail.includes('goal') ? (
+                                        <span className="text-success d-flex align-items-center">
+                                          <Goal color="green" strokeWidth="1px" className="me-1" />
+                                        </span>
+                                      ) : detail.includes('substitution') ? (
+                                        <span className="d-flex align-items-center">
+                                          <ArrowLeftRight color="white" strokeWidth="1px" className="me-1" />
+                                        </span>
+                                      ) : (
+                                        <span className="text-muted d-flex align-items-center">
+                                          <RectangleVertical className="me-1" />
+                                          {event.detail || '-'}
+                                        </span>
+                                      )}
+                                    </td>
+
+                                    <td className="time-info">
+                                      <p className="m-0">{event.time.elapsed}'</p>
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+
+                          </table>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </>
               )}
             </div>
+
           )}
+
+
+
+
+
+
+
           {activeTab === 'profile' && (
             <div className="tab-pane fade show active">This is the Profile tab content.</div>
           )}
@@ -217,30 +297,8 @@ const FixtureDetails = () => {
             <div className="tab-pane fade show active">This is the Contact tab content.</div>
           )}
         </div>
-      </div>
 
 
-
-      {/* Match Events */}
-      {/* {events?.length > 0 && (
-        <div className="card bg-secondary mb-4">
-          <div className="card-header">
-            <strong>Match Events</strong>
-          </div>
-          <ul className="list-group list-group-flush">
-            {events.map((event, idx) => (
-              <li key={idx} className="list-group-item bg-dark text-white d-flex justify-content-between align-items-center">
-                <div>
-                  <img src={event.team.logo} alt={event.team.name} width="20" className="me-2" />
-                  <strong>{event.team.name}</strong> - {event.player.name}
-                  {event.detail && <> ({event.detail})</>}
-                </div>
-                <span>{event.time.elapsed}'</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )} */}
     </div>
   );
 };

@@ -6,21 +6,10 @@ import { leagues } from "../leagues.js";
 import dayjs from "dayjs";
 import Slider from "react-slick";
 
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 
 
-export default function Dashboard() {
 
-  useEffect(() => {
-        AOS.init({
-          duration: 1000, // animation duration in ms
-          once: true,     // whether animation should happen only once
-        });
-      }, []);
-  
+export default function Dashboard() {  
   
     const [leaguesData, setLeaguesData] = useState([]);
     const [selectedDate, setSelectedDate] = useState(dayjs());
@@ -91,7 +80,7 @@ export default function Dashboard() {
     <div>
       <Navbar />
       
-      <div>
+      <section className="container" >
 
       {/* React Slick Date Carousel */}
       {/* <div style={{ padding: "15px 10px", borderBottom: "1px solid #ccc", marginBottom: "20px" }}>
@@ -131,7 +120,7 @@ export default function Dashboard() {
           {filteredFavorites.map((league, index) => (
             <tr key={`fav-${index}`}  onClick={()=>window.location.href='/dashboard/singleLeague'}>
               <td>
-                <div data-aos="fade-in" style={{ padding: "5px 10px" }} className="d-flex flex-row gap-3">
+                <div style={{ padding: "5px 10px" }} className="d-flex flex-row gap-3">
                   <img
                     width="30"
                     style={{ borderRadius: "15px" }}
@@ -160,7 +149,7 @@ export default function Dashboard() {
             </td>
           </tr>
           {otherLeagues.slice(0, 30).map((league, index) => (
-            <tr key={`other-${index}`} data-aos="fade-in">
+            <tr key={`other-${index}`} >
               <td  >
                 <div  style={{ padding: "5px 10px" }} className="d-flex flex-row gap-3">
                   <img
@@ -182,7 +171,7 @@ export default function Dashboard() {
           ))}
         </tbody>
       </table>
-    </div>
+    </section>
 
       <MobileNav/>
     </div>

@@ -123,7 +123,7 @@ useEffect(() => {
           {filteredFavorites.map((league, index) => (
             <tr key={`fav-${index}`} >
               <td>
-                <div data-aos="fade-in" style={{ padding: "5px 10px" }} className="d-flex flex-row gap-3">
+                <div  style={{ padding: "5px 10px" }} className="d-flex flex-row gap-3">
                   <img
                     width="30"
                     style={{ borderRadius: "15px" }}
@@ -149,7 +149,7 @@ useEffect(() => {
             </td>
           </tr>
           {otherLeagues.slice(0, 30).map((league, index) => (
-            <tr key={`other-${index}`} data-aos="fade-in">
+            <tr key={`other-${index}`}>
               <td  >
                 <div  style={{ padding: "5px 10px" }} className="d-flex flex-row gap-3">
                   <img

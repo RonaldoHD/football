@@ -23,8 +23,13 @@ body{
 
 
 
+
 a{
   color: white!important;
+}
+
+p , span{
+  font-size: 14px;
 }
 
 .feature{
@@ -85,7 +90,8 @@ input{
 
 
 .table-primary{
-  --bs-table-bg: var(--light-blue);
+  --bs-table-bg: red;
+  /* --bs-table-bg: var(--light-blue); */
 }
 
 

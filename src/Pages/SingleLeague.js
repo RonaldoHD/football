@@ -7,6 +7,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from '../Components/Navbar';
+import { Star } from 'lucide-react';
 
 
 
@@ -34,8 +35,7 @@ export default function SingleLeague() {
   return (
     <div>
       <Navbar />
-
-
+      <section className='container' >  
       <div className="d-flex align-items-center p-2 bg-dark text-light" style={{ fontSize: "0.9rem", cursor: "default" }}>
         <img
           src={League[0]?.league.logo}
@@ -53,9 +53,12 @@ export default function SingleLeague() {
         <tbody    >
           {League.map((match) => (
             <>
-              <tr data-aos="fade-in" onClick={() => navigate('/dashboard/single')}
+              <tr  onClick={() => navigate('/dashboard/single')}
                 key={match.fixture.id}
                 style={{ cursor: "pointer", fontSize: "0.85rem", borderBottom: '1px solid #ffffff1f' }}>
+                <td>
+                  <Star size={18} />
+                </td>
                 <td className="p-2 d-flex flex-column align-items-start gap-1">
                   <tr>
                     <img src={match.teams.home.logo} alt={match.teams.home.name} width="20" className="me-2" />
@@ -73,12 +76,18 @@ export default function SingleLeague() {
                   <tr style={{ color: 'var(--text-red)' }} >{match.goals.home}</tr>
                   <tr style={{ color: 'var(--text-red)' }} >{match.goals.away}</tr>
                 </td>
+                <td>
+                <tr >-</tr>
+                <tr >-</tr>
+                <tr >-</tr>
+                </td>
               </tr>
             </>
           ))}
         </tbody>
 
       </table>
+      </section>
       <MobileNav />
     </div>
   )
