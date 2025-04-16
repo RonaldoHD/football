@@ -73,8 +73,8 @@ export default function SingleLeague() {
 
                 </td>
                 <td>
-                  <tr style={{ color: 'var(--text-red)' }} >{match.goals.home}</tr>
-                  <tr style={{ color: 'var(--text-red)' }} >{match.goals.away}</tr>
+                  <tr style={{ color: 'var(--text-red)', fontWeight:'600'}} >{match.goals.home}</tr>
+                  <tr style={{ color: 'var(--text-red)', fontWeight:'600'}} >{match.goals.away}</tr>
                 </td>
                 <td>
                 <tr >-</tr>

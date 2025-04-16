@@ -3,13 +3,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { singlefixture } from "../singleFixture.js";  // Importing the local file
 import "bootstrap/dist/css/bootstrap.min.css";
-import { RectangleVertical, ArrowLeftRight, Goal } from 'lucide-react';
+import { RectangleVertical, ArrowLeftRight, Goal, ArrowDown, ArrowUp } from 'lucide-react';
 
 const FixtureDetails = () => {
   const { id } = useParams();
   const [fixture, setFixture] = useState(null);
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('home');
+  const [activeTab, setActiveTab] = useState('events');
 
   useEffect(() => {
     const fetchFixture = async () => {
@@ -166,123 +166,127 @@ const FixtureDetails = () => {
 
 
       <div>
-        <div className='w-100 bg-dark p-2 mb-4' >ODDS</div><div>
-          
+        <div className='w-100 bg-dark p-2 mb-4' >ODDS</div>
+
+        <div className='d-flex flex-row justify-content-between gap-2 mb-4' >
+          <div className='odd' >1    <div><ArrowUp strokeWidth={'3px'} color='green' /> 2.20</div></div>
+          <div className='odd' >1    <div><ArrowUp strokeWidth={'3px'} color='red' /> 2.20</div></div>
+          <div className='odd' >1    <div><ArrowUp strokeWidth={'3px'} color='red' /> 2.20</div></div>
         </div>
       </div>
 
 
 
-        {/* Pills Navigation */}
-        <ul className="nav nav-pills mb-3" role="tablist">
-          <li className="nav-item" role="presentation">
-            <button
-              className={`nav-link ${activeTab === 'events' ? 'active' : ''}`}
-              onClick={() => setActiveTab('events')}
-            >
-              Events
-            </button>
-          </li>
-          <li className="nav-item" role="presentation">
-            <button
-              className={`nav-link ${activeTab === 'lineups' ? 'active' : ''}`}
-              onClick={() => setActiveTab('lineups')}
-            >
-              Lineups
-            </button>
-          </li>
-          <li className="nav-item" role="presentation">
-            <button
-              className={`nav-link ${activeTab === 'players' ? 'active' : ''}`}
-              onClick={() => setActiveTab('players')}
-            >
-              Players
-            </button>
-          </li>
+      {/* Pills Navigation */}
+      <ul className="nav nav-pills mb-3" role="tablist">
+        <li className="nav-item" role="presentation">
+          <button
+            className={`nav-link ${activeTab === 'events' ? 'active' : ''}`}
+            onClick={() => setActiveTab('events')}
+          >
+            Events
+          </button>
+        </li>
+        <li className="nav-item" role="presentation">
+          <button
+            className={`nav-link ${activeTab === 'lineups' ? 'active' : ''}`}
+            onClick={() => setActiveTab('lineups')}
+          >
+            Lineups
+          </button>
+        </li>
+        <li className="nav-item" role="presentation">
+          <button
+            className={`nav-link ${activeTab === 'players' ? 'active' : ''}`}
+            onClick={() => setActiveTab('players')}
+          >
+            Players
+          </button>
+        </li>
 
-          <li className="nav-item" role="presentation">
-            <button
-              className={`nav-link ${activeTab === 'statistics' ? 'active' : ''}`}
-              onClick={() => setActiveTab('statistics')}
-            >
-              Statistics
-            </button>
-          </li>
+        <li className="nav-item" role="presentation">
+          <button
+            className={`nav-link ${activeTab === 'statistics' ? 'active' : ''}`}
+            onClick={() => setActiveTab('statistics')}
+          >
+            Statistics
+          </button>
+        </li>
 
-        </ul>
+      </ul>
 
-        {/* Pills Content */}
-        <div className="tab-content rounded ">
-
-
+      {/* Pills Content */}
+      <div className="tab-content rounded ">
 
 
-          {activeTab === 'events' && (
 
-            <div className="football-events-table">
-              {events?.length > 0 && (
-                <>
-                  {[...new Set(events.map(e => e.team.name))].map((teamName) => {
-                    const teamEvents = events.filter(e => e.team.name === teamName);
-                    const teamLogo = teamEvents[0]?.team.logo;
 
-                    return (
-                      <div key={teamName} className="team-section mb-4">
-                        <div className="bg-dark  d-flex align-items-center mb-2 p-2 w-100">
-                          <img src={teamLogo} alt={teamName} width="24" className="me-2" />
-                          <h5 className="m-0 text-neon">{teamName}</h5>
-                        </div>
-                        <div className="table-responsive">
-                          <table className="table-hover mb-0 w-100">
-                            <tbody>
-                              {teamEvents.map((event, idx) => {
-                                const detail = event.detail?.toLowerCase() || '';
+        {activeTab === 'events' && (
 
-                                return (
-                                  <tr key={idx} className="event-row" style={{borderBottom:'1px solid #444444'}} >
-                                    <td className="player-info py-2">
-                                      <p className="m-0">{event.player.name}</p>
-                                    </td>
+          <div className="football-events-table">
+            {events?.length > 0 && (
+              <>
+                {[...new Set(events.map(e => e.team.name))].map((teamName) => {
+                  const teamEvents = events.filter(e => e.team.name === teamName);
+                  const teamLogo = teamEvents[0]?.team.logo;
 
-                                    <td className="detail-info">
-                                      {detail.includes('yellow') ? (
-                                        <span className="neon-badge yellow">🟨 Card</span>
-                                      ) : detail.includes('red') ? (
-                                        <span className="neon-badge red">🟥 Card</span>
-                                      ) : detail.includes('goal') ? (
-                                        <span className="text-success d-flex align-items-center">
-                                          <Goal color="green" strokeWidth="1px" className="me-1" />
-                                        </span>
-                                      ) : detail.includes('substitution') ? (
-                                        <span className="d-flex align-items-center">
-                                          <ArrowLeftRight color="white" strokeWidth="1px" className="me-1" />
-                                        </span>
-                                      ) : (
-                                        <span className="text-muted d-flex align-items-center">
-                                          <RectangleVertical className="me-1" />
-                                          {event.detail || '-'}
-                                        </span>
-                                      )}
-                                    </td>
-
-                                    <td className="time-info">
-                                      <p className="m-0">{event.time.elapsed}'</p>
-                                    </td>
-                                  </tr>
-                                );
-                              })}
-                            </tbody>
-
-                          </table>
-                        </div>
+                  return (
+                    <div key={teamName} className="team-section mb-4">
+                      <div className="bg-dark  d-flex align-items-center mb-2 p-2 w-100">
+                        <img src={teamLogo} alt={teamName} width="24" className="me-2" />
+                        <h5 className="m-0 text-neon">{teamName}</h5>
                       </div>
-                    );
-                  })}
-                </>
-              )}
-            </div>
+                      <div className="table-responsive">
+                        <table className="table-hover mb-0 w-100">
+                          <tbody>
+                            {teamEvents.map((event, idx) => {
+                              const detail = event.detail?.toLowerCase() || '';
 
-          )}
+                              return (
+                                <tr key={idx} className="event-row" style={{ borderBottom: '1px solid #444444' }} >
+                                  <td className="player-info py-2">
+                                    <p className="m-0">{event.player.name}</p>
+                                  </td>
+
+                                  <td className="detail-info">
+                                    {detail.includes('yellow') ? (
+                                      <span className="neon-badge yellow">🟨 Card</span>
+                                    ) : detail.includes('red') ? (
+                                      <span className="neon-badge red">🟥 Card</span>
+                                    ) : detail.includes('goal') ? (
+                                      <span className="text-success d-flex align-items-center">
+                                        <Goal color="green" strokeWidth="1px" className="me-1" />
+                                      </span>
+                                    ) : detail.includes('substitution') ? (
+                                      <span className="d-flex align-items-center">
+                                        <ArrowLeftRight color="white" strokeWidth="1px" className="me-1" />
+                                      </span>
+                                    ) : (
+                                      <span className="text-muted d-flex align-items-center">
+                                        <RectangleVertical className="me-1" />
+                                        {event.detail || '-'}
+                                      </span>
+                                    )}
+                                  </td>
+
+                                  <td className="time-info">
+                                    <p className="m-0">{event.time.elapsed}'</p>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+
+                        </table>
+                      </div>
+                    </div>
+                  );
+                })}
+              </>
+            )}
+          </div>
+
+        )}
 
 
 
@@ -290,13 +294,13 @@ const FixtureDetails = () => {
 
 
 
-          {activeTab === 'profile' && (
-            <div className="tab-pane fade show active">This is the Profile tab content.</div>
-          )}
-          {activeTab === 'contact' && (
-            <div className="tab-pane fade show active">This is the Contact tab content.</div>
-          )}
-        </div>
+        {activeTab === 'profile' && (
+          <div className="tab-pane fade show active">This is the Profile tab content.</div>
+        )}
+        {activeTab === 'contact' && (
+          <div className="tab-pane fade show active">This is the Contact tab content.</div>
+        )}
+      </div>
 
 
     </div>

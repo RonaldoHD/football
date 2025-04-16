@@ -1,16 +1,48 @@
 
 :root{
-  --dark-blue:#0a0f1a;
-  --blue:#001138;
+  /* --dark-blue:#0a0f1a; */
+  /* --dark-blue:#060a50;
+  --blue:#001138; */
   /* --light-blue:#1B2334; */
-  --light-blue:rgb(28, 32, 51);
-  --text-blue:#0A82FB;
-  --text-red:#cf3535;
+  /* --light-blue:rgb(28, 32, 51); */
+  /* --text-blue:#0A82FB;
+  --text-red:#cf3535; */
+
+
+  --dark-blue:#060a50;
+  --blue:#001138;
+  --light-blue:#0F1365;
+  --text-blue:#A98324;
+  --text-red:#A98324;
+  
+}
+
+.primary{
+  color: #E94F37!important;
+}
+.active{
+  background-color: var(--text-blue)!important;
+  color: white!important;
+}
+
+.text-primary {
+  color: var(--text-blue)!important;
+  font-weight: 600;
+}
+
+.nav-link:hover{
+  color: white;
+}
+
+.nav-link{
+  color: white;
 }
 
 body{
   background-color: var(--dark-blue);
   color: white;
+  font-family: monospace;
+
 }
 
 .bg-dark{
@@ -21,7 +53,16 @@ body{
   background-color: var(--light-blue);
 }
 
-
+.odd{
+  border: 2px solid rgba(255, 255, 255, 0.281);
+  border-radius: 7px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items:center;
+  width: 100%;
+  padding: 4px 10px;
+}
 
 
 a{
@@ -30,6 +71,7 @@ a{
 
 p , span{
   font-size: 14px;
+  
 }
 
 .feature{

@@ -5,7 +5,9 @@ export default function Navbar() {
     <section className="py-2" style={{boxShadow:'#ffffff26 1px 1px 8px'}} >
         <nav className="navbar container navbar-expand-lg ">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#" style={{fontWeight:'bold' , color:'var(--text-blue)!important'}} >Dream Sports</a>
+        <a className="navbar-brand" href="#" 
+        // style={{fontWeight:'bold' , color:'var(--text-blue)!important'}} 
+        >Z-Sport</a>
         <button 
           className="navbar-toggler" 
           type="button" 
