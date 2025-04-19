@@ -171,9 +171,9 @@ const FixtureDetails = () => {
 
 
       <div>
-        <div className='w-100 bg-dark p-2 mb-2' >ODDS</div>
+        <div className='w-100 bg-dark p-2' >ODDS</div>
 
-        <div className='d-flex flex-row justify-content-between gap-2 mb-4' >
+        <div className='d-flex flex-row justify-content-between gap-2 mb-4 p-3'>
           <div className='odd' >1    <div><ArrowUp strokeWidth={'3px'} color='green' /> 2.20</div></div>
           <div className='odd' >1    <div><ArrowUp strokeWidth={'3px'} color='red' /> 2.20</div></div>
           <div className='odd' >1    <div><ArrowUp strokeWidth={'3px'} color='red' /> 2.20</div></div>
