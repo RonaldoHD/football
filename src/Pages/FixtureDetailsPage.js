@@ -5,10 +5,10 @@ import Navbar from '../Components/Navbar.js'
 export default function FixtureDetailsPage() {
   return (
     <div>
-          <Navbar/>
+      <Navbar />
 
-      <FixtureDetails/>
-      <MobileNav/>
+      <FixtureDetails />
+      <MobileNav />
     </div>
   )
 }

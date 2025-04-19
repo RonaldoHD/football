@@ -9,7 +9,8 @@
   --text-red:#cf3535; */
 
 
-  --dark-blue:#060a50;
+  /* --dark-blue:#060a50; */
+  --dark-blue:#0b0d2b;
   --blue:#001138;
   --light-blue:#0F1365;
   --text-blue:#A98324;
@@ -153,10 +154,83 @@ input{
 
 
 
+
+
+
+
+/* Lineups section */
+.pitch-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pitch {
+  background: linear-gradient(to bottom, #387c3b, #2e7d32);
+  width: 100%;
+  max-width: 700px;
+  padding: 1rem;
+  border-radius: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid white;
+}
+
+.line {
+  display: flex;
+  justify-content: center;
+  margin: 0.8rem 0;
+  gap: 1rem;
+}
+
+.player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.jersey {
+  width: 50px;
+  height: 50px;
+  background-color: #ddd;
+  border-radius: 5px;
+  font-weight: bold;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.jersey-blue {
+  background-color: #007bff;
+}
+
+.jersey-red {
+  background-color: #dc3545;
+}
+
+.player-name {
+  font-size: 0.8rem;
+  color: white;
+  max-width: 80px;
+  overflow-wrap: break-word;
+}
+
+
+
 @media screen and (max-width : 768px) {
   .container{
     max-width: 100%;
-    
+    font-size: 65%;
     padding: 0;
+  }
+
+  p , span{
+    font-size: 12px;
+    
   }
 }
