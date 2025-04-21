@@ -10,11 +10,19 @@
 
 
   /* --dark-blue:#060a50; */
-  --dark-blue:#0b0d2b;
+  /* --dark-blue:#0b0d2b;
   --blue:#001138;
   --light-blue:#0F1365;
   --text-blue:#A98324;
+  --text-red:#A98324; */
+
+
+  --dark-blue:#111827;
+  --blue:#020817;
+  --light-blue:#1f2937;
+  --text-blue:#A98324;
   --text-red:#A98324;
+  
   
 }
 
@@ -28,7 +36,7 @@
 
 .text-primary {
   color: var(--text-blue)!important;
-  font-weight: 600;
+  font-weight: 800;
 }
 
 .nav-link:hover{
@@ -37,6 +45,11 @@
 
 .nav-link{
   color: white;
+}
+
+.mobilenav{
+  background-color: var(--dark-blue);
+  border-top: 1px solid rgba(255, 255, 255, 0.027);
 }
 
 body{

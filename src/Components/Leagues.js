@@ -8,6 +8,32 @@ import "slick-carousel/slick/slick-theme.css";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
+
+
+
+// url: 'https://api-football-v1.p.rapidapi.com/v3/fixtures',
+//   params: {date: '2021-01-29'},
+
+
+//   url: 'https://api-football-v1.p.rapidapi.com/v3/fixtures',
+//   params: {id: '157201'},
+
+//   url: 'https://api-football-v1.p.rapidapi.com/v3/leagues',
+
+//   url: 'https://api-football-v1.p.rapidapi.com/v3/leagues',
+//   params: {id: '39'},
+
+//   url: 'https://api-football-v1.p.rapidapi.com/v3/odds',
+//   params: {fixture: '568987'},
+
+
+//   headers: {
+//     'x-rapidapi-key': '59a8fb1369mshb1757809560a70fp1fd523jsn406a21445909',
+//     'x-rapidapi-host': 'api-football-v1.p.rapidapi.com'
+//   }
+
+
+
 export default function Leagues() {
 
 useEffect(() => {

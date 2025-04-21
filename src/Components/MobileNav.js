@@ -8,7 +8,7 @@ const MobileNav = () => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className="d-md-none fixed-bottom bg-dark  border-top border-secondary">
+    <div className="mobilenav d-md-none fixed-bottom">
       <div className="d-flex justify-content-around align-items-center py-2">
         <Link
           to="/dashboard/matches"
@@ -16,7 +16,7 @@ const MobileNav = () => {
             isActive("/dashboard/matches") ? "text-primary" : "text-secondary"
           }`}
         >
-             <Trophy size={20} className="mb-1" />
+             <Trophy size={20} strokeWidth={2} className="mb-1" />
           <span>Matches</span>
         </Link>
 
@@ -26,7 +26,7 @@ const MobileNav = () => {
             isActive("/dashboard/live") ? "text-primary" : "text-secondary"
           }`}
         >
-          <Radio  size={20} className="mb-1" />
+          <Radio  size={20} strokeWidth={2} className="mb-1" />
           <span>Live</span>
         </Link>
 
@@ -34,7 +34,7 @@ const MobileNav = () => {
           to="#"
           className="d-flex flex-column align-items-center text-secondary text-decoration-none small"
         >
-          <Calendar size={20} className="mb-1" />
+          <Calendar size={20} strokeWidth={2} className="mb-1" />
           <span>News</span>
         </Link>
 
@@ -42,7 +42,7 @@ const MobileNav = () => {
           to="#"
           className="d-flex flex-column align-items-center text-secondary text-decoration-none small"
         >
-          <Heart size={20} className="mb-1" />
+          <Heart size={20} strokeWidth={2} className="mb-1" />
           <span>Favorites</span>
         </Link>
 
@@ -50,7 +50,7 @@ const MobileNav = () => {
           to="#"
           className="d-flex flex-column align-items-center text-secondary text-decoration-none small"
         >
-          <User size={20} className="mb-1" />
+          <User size={20} strokeWidth={2} className="mb-1" />
           <span>Profile</span>
         </Link> */}
       </div>
