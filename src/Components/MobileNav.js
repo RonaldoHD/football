@@ -39,10 +39,12 @@ const MobileNav = () => {
         </Link>
 
         <Link
-          to="#"
-          className="d-flex flex-column align-items-center text-secondary text-decoration-none small"
+          to="/dashboard/favorites"
+          className={`d-flex flex-column align-items-center text-decoration-none small ${
+            isActive("/dashboard/favorites") ? "text-primary" : "text-secondary"
+          }`}
         >
-          <Heart size={20} strokeWidth={2} className="mb-1" />
+          <Heart  size={20} strokeWidth={2} className="mb-1" />
           <span>Favorites</span>
         </Link>
 

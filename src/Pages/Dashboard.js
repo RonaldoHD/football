@@ -79,8 +79,10 @@ export default function Dashboard() {
 
   const settings = {
     dots: false,
+    arrows:false,
     infinite: false,
     speed: 500,
+
     slidesToShow: 7,
     slidesToScroll: 3,
     responsive: [
@@ -106,37 +108,39 @@ export default function Dashboard() {
       <section className="container" >
 
         {/* React Slick Date Carousel */}
-        {/* <div style={{ padding: "15px 10px", borderBottom: "1px solid #ccc", marginBottom: "20px" }}>
-        <Slider {...settings}>
-          {dateList.map((date, index) => {
-            const isSelected = date.isSame(selectedDate, "day");
-            return (
-              <div key={index}>
-                <div
-                  onClick={() => setSelectedDate(date)}
-                  style={{
-                    borderRadius: "10px",
-                    cursor: "pointer",
-                    color: isSelected ? "var(--text-blue)" : "white",
-                    textAlign: "center",
-                    margin: "0 5px",
-                    minHeight: "10px",
-                  }}
-                >
-                  {formatDateLabel(date)}
+        <div style={{ padding: "15px 10px", borderBottom: "1px solid #ccc", marginBottom: "20px" }}>
+          <Slider {...settings}>
+            {dateList.map((date, index) => {
+              const isSelected = date.isSame(selectedDate, "day");
+              return (
+                <div key={index}>
+                  <div
+                    onClick={() => setSelectedDate(date)}
+                    style={{
+                      borderRadius: "10px",
+                      cursor: "pointer",
+                      color: isSelected ? "var(--text-blue)" : "white",
+                      textAlign: "center",
+                      margin: "0 5px",
+                      minHeight: "10px",
+                    }}
+                  >
+                    {formatDateLabel(date)}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </Slider>
-      </div> */}
+              );
+            })}
+          </Slider>
+        </div>
+
+
 
         {/* Leagues Table */}
         <table className="w-100">
           <tbody>
             {/* Favorite Competitions */}
             <tr>
-              <td colSpan={2} className="p-2" style={{ backgroundColor: "var(--light-blue)" , color:"var(--text-blue)" }}>
+              <td colSpan={2} className="p-2" style={{ backgroundColor: "var(--light-blue)", color: "var(--text-blue)" }}>
                 <p className="p-0 m-0">FAVORITE COMPETITIONS</p>
               </td>
             </tr>
@@ -146,7 +150,6 @@ export default function Dashboard() {
                   <div style={{ padding: "5px 10px" }} className="d-flex flex-row gap-3">
                     <img
                       width="30"
-                      style={{ borderRadius: "15px" }}
                       src={league.country.flag}
                       alt={`${league.country.name} flag`}
                     />
@@ -177,7 +180,6 @@ export default function Dashboard() {
                   <div style={{ padding: "5px 10px" }} className="d-flex flex-row gap-3">
                     <img
                       width="30"
-                      style={{ borderRadius: "15px" }}
                       src={league.country.flag}
                       alt={`${league.country.name} flag`}
                     />

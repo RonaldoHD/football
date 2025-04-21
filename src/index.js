@@ -7,6 +7,7 @@ import DashboardLive from './Pages/DashboardLive';
 import Test from './Pages/Test'
 import FixtureDetailsPage from './Pages/FixtureDetailsPage';
 import SingleLeague from './Pages/SingleLeague';
+import Favorites from './Pages/Favorites';
 
 import './App.css'
 
@@ -19,6 +20,7 @@ root.render(
       <Route path="/dashboard/live" element={<DashboardLive />} />
       <Route path="/dashboard/single" element={<FixtureDetailsPage />} />
       <Route path="/dashboard/singleLeague" element={<SingleLeague />} />
+      <Route path="/dashboard/favorites" element={<Favorites />} />
 
       <Route path="/test" element={<Test />} />
     </Routes>
