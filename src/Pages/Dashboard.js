@@ -6,6 +6,10 @@ import { leagues } from "../leagues.js";
 import dayjs from "dayjs";
 import Slider from "react-slick";
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+
 
 
 
@@ -79,26 +83,11 @@ export default function Dashboard() {
 
   const settings = {
     dots: false,
-    arrows:false,
+    arrows: false,
     infinite: false,
     speed: 500,
-
-    slidesToShow: 7,
+    slidesToShow: 5,
     slidesToScroll: 3,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 5,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 3,
-        },
-      },
-    ],
   };
 
   return (
@@ -108,8 +97,8 @@ export default function Dashboard() {
       <section className="container" >
 
         {/* React Slick Date Carousel */}
-        <div style={{ padding: "15px 10px", borderBottom: "1px solid #ccc", marginBottom: "20px" }}>
-          <Slider {...settings}>
+        <div className="py-3" >
+          <Slider {...settings} style={{width:'100%'}} >
             {dateList.map((date, index) => {
               const isSelected = date.isSame(selectedDate, "day");
               return (
@@ -132,6 +121,8 @@ export default function Dashboard() {
             })}
           </Slider>
         </div>
+
+
 
 
 

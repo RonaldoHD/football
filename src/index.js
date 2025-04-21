@@ -8,6 +8,7 @@ import Test from './Pages/Test'
 import FixtureDetailsPage from './Pages/FixtureDetailsPage';
 import SingleLeague from './Pages/SingleLeague';
 import Favorites from './Pages/Favorites';
+import News from './Pages/News';
 
 import './App.css'
 
@@ -21,6 +22,7 @@ root.render(
       <Route path="/dashboard/single" element={<FixtureDetailsPage />} />
       <Route path="/dashboard/singleLeague" element={<SingleLeague />} />
       <Route path="/dashboard/favorites" element={<Favorites />} />
+      <Route path="/dashboard/news" element={<News />} />
 
       <Route path="/test" element={<Test />} />
     </Routes>

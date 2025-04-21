@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ChevronLeft } from 'lucide-react';
+import logo from '../3.png'
 
 
 export default function Navbar() {
@@ -12,8 +13,9 @@ export default function Navbar() {
       <nav className="navbar container navbar-expand-lg ">
         <div className="container">
           <div className="d-flex flex-row align-items-center" >
-            <p onClick={() => navigate(-1)} className="p-2 m-0">    <ChevronLeft /></p>
-            <a className="navbar-brand" >Z-Sport</a>
+            <p onClick={() => navigate(-1)} className="p-2 m-0"><ChevronLeft /></p>
+            <img width={90} src={logo} />
+            {/* <a className="navbar-brand" >Dream Sports</a> */}
           </div>
           {/* <button 
           className="navbar-toggler" 

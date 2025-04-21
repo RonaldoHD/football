@@ -31,7 +31,7 @@ const MobileNav = () => {
         </Link>
 
         <Link
-          to="#"
+          to="/dashboard/news"
           className="d-flex flex-column align-items-center text-secondary text-decoration-none small"
         >
           <Calendar size={20} strokeWidth={2} className="mb-1" />
