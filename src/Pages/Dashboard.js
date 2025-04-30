@@ -72,6 +72,8 @@ export default function Dashboard() {
     { name: "Serie A", country: "Italy" },
     { name: "Copa Del Rey", country: "Spain" },
     { name: "La Liga", country: "Spain" },
+    { name: "UEFA Europa League", country: "World" },
+    { name: "CONCACAF Champions League", country: "World" },
   ];
 
   const dateList = Array.from({ length: 14 }, (_, i) =>
@@ -171,7 +173,7 @@ export default function Dashboard() {
                     <div style={{ padding: "5px 10px" }} className="d-flex flex-row gap-3">
                       <img
                         width="30"
-                        src={item.leagueInfo.flag}
+                        src={item.leagueInfo.flag ? item.leagueInfo.flag : item.leagueInfo.logo}
                         alt={`${item.leagueInfo.country} flag`}
                       />
                       <div>

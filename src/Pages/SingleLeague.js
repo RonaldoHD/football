@@ -93,14 +93,13 @@ export default function SingleLeague() {
                 return (
                   <tr
                     key={match.fixture.id}
-                    onClick={() => toggleFavorite(match)}
                     style={{
                       cursor: "pointer",
                       fontSize: "0.85rem",
                       borderBottom: "1px solid #ffffff1f",
                     }}
                   >
-                    <td>
+                    <td onClick={() => toggleFavorite(match)} >
                       {isFav ? (
                         <Star fill="var(--text-red)" color="var(text-red)" size={18} />
                       ) : (
