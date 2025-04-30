@@ -1,101 +1,81 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { singlefixture } from "../singleFixture.js";  // Importing the local file
+import { useLocation, useNavigate } from "react-router-dom";
+import { ArrowLeftRight, Goal, RectangleVertical, ArrowUp, ArrowDown } from 'lucide-react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import { PlayerCard } from "./PlayerCard.js";
-import { RectangleVertical, ArrowLeftRight, Goal, ArrowDown, ArrowUp } from 'lucide-react';
 
 const FixtureDetails = () => {
-  const { id } = useParams();
-  const [fixture, setFixture] = useState(null);
+  const location = useLocation();
   const navigate = useNavigate();
+  const searchParams = new URLSearchParams(location.search);
+  const fixture_id = searchParams.get('fixture');
+
+  const [fixture, setFixture] = useState(null);
+  const [odds, setOdds] = useState([]);
   const [activeTab, setActiveTab] = useState('events');
+  const [loadingFixture, setLoadingFixture] = useState(true);
+  const [loadingOdds, setLoadingOdds] = useState(true);
 
   useEffect(() => {
     const fetchFixture = async () => {
+      setLoadingFixture(true);
       try {
-        // If you're using local data for now, simulate the fetch like this
-        const response = singlefixture.response[0];  // Replace this with a real API call later
-        console.log(response)
-        setFixture(response || null);
-      } catch (err) {
-        console.error("Error fetching fixture:", err);
+        const response = await fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?id=${fixture_id}`, {
+          method: 'GET',
+          headers: {
+            'x-rapidapi-key': '59a8fb1369mshb1757809560a70fp1fd523jsn406a21445909', // Replace with your real key
+            'x-rapidapi-host': 'api-football-v1.p.rapidapi.com'
+          }
+        });
+        const data = await response.json();
+        setFixture(data.response[0]);  // Correct way to access the object
+      } catch (error) {
+        console.error('Error fetching fixture:', error);
       }
+      setLoadingFixture(false);
+    };
+
+    const fetchOdds = async () => {
+      setLoadingOdds(true);
+      try {
+        const response = await fetch(`https://your-odds-api.com/fixture/${fixture_id}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer YOUR_ODDS_API_KEY' // Example
+          }
+        });
+        const data = await response.json();
+        setOdds(data.odds || []); // Adjust according to your odds API structure
+      } catch (error) {
+        console.error('Error fetching odds:', error);
+      }
+      setLoadingOdds(false);
     };
 
     fetchFixture();
-  }, [id]);
+    fetchOdds();
+  }, [fixture_id]);
 
+  if (loadingFixture) return <div className="text-center mt-5 text-light">Loading Fixture...</div>;
 
-
-  if (!fixture) return <div className="text-center mt-5 text-light">Loading...</div>;
+  if (!fixture) return <div className="text-center mt-5 text-light">Fixture not found.</div>;
 
   const { fixture: match, league, teams, goals, statistics, events, lineups, players } = fixture;
-  const isLive = match.status.short === "1H" || match.status.short === "2H" || match.status.short === "ET";
 
-
-
+  const isLive = ['1H', '2H', 'ET'].includes(match.status.short);
 
   const date = new Date(match.date);
-  const options = {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-    timeZone: 'Europe/Berlin'
-  };
 
-  const parts = date.toLocaleString('en-GB', options).split(', ');
-  const [day, month, year] = parts[0].split('/');
-  const time = parts[1];
-
-  const finalDate = `${day}.${month}.${year} ${time}`;
-
-
+  const finalDate = date.toLocaleString('en-GB', {
+    day: '2-digit', month: '2-digit', year: 'numeric',
+    hour: '2-digit', minute: '2-digit',
+    hour12: false, timeZone: 'Europe/Berlin'
+  }).replace(',', '');
 
 
 
 
   return (
     <div className="container mt-1 text-light">
-
-
-
-
-
-
-
-      {/* <div>
-        <div>
-          <img src={league.logo} alt={league.name} width="25" className="me-2" />
-          {league.name} - {league.round}
-        </div>
-        {isLive && (
-          <span className="badge bg-danger p-2" style={{ animation: "pulse 1s infinite" }}>
-            🔴 LIVE
-          </span>
-        )}
-        <p>{new Date(match.date).toLocaleString()}</p>
-
-        <div className="d-flex flex-row justify-content-between" >
-          <div>
-            <img src={teams.home.logo} alt={teams.home.name} width="70" style={{ background: 'white', borderRadius: '5px', padding: '7px' }} />
-            <p>{teams.home.name}</p>
-          </div>
-
-          <h2>{goals.home} - {goals.away}</h2>
-
-          <div>
-            <img src={teams.away.logo} alt={teams.away.name} width="70" style={{ background: 'white', borderRadius: '5px', padding: '7px' }} />
-            <p>{teams.away.name}</p>
-          </div>
-
-
-        </div>
-      </div> */}
 
       <div className="table-responsive">
         {/* <p onClick={() => navigate(-1)} className="p-2 m-0">← Back</p> */}
@@ -228,7 +208,7 @@ const FixtureDetails = () => {
 
         {activeTab === 'events' && (
 
-          <div className="football-events-table"  style={{marginBottom:'6rem'}}>
+          <div className="football-events-table" style={{ marginBottom: '6rem' }}>
             {events?.length > 0 && (
               <>
                 {[...new Set(events.map(e => e.team.name))].map((teamName) => {
@@ -296,32 +276,48 @@ const FixtureDetails = () => {
 
 
         {activeTab === 'lineups' && (
-          <div className="p-1"  style={{marginBottom:'6rem'}}>
+          <div className="p-1" style={{ marginBottom: '6rem' }}>
             <h4 className="text-center mb-4 text-lg font-semibold">Lineups</h4>
 
             <div className="pitch-container overflow-x-auto">
-              <div className="pitch grid grid-cols-1 md:grid-cols-2 gap-2 mb-5">
+
+              <div className="pitch-lines">
+                <div className="center-circle"></div>
+                <div className="penalty-box top"></div>
+                <div className="penalty-box bottom"></div>
+                <div className="goal-box top"></div>
+                <div className="goal-box bottom"></div>
+              </div>
+
+              <div className="pitch grid grid-cols-1 md:grid-cols-2 gap-2">
                 {[0, 1].map((teamIndex) => {
                   const team = lineups[teamIndex];
                   const formation = team.formation.split('-').map(n => parseInt(n));
-                  const players = [...team.startXI.map(p => p.player)];
-                  const goalkeeper = players.shift();
+                  const playersPos = [...team.startXI.map(p => p.player)];
+                  const goalkeeper = playersPos.shift();
 
                   const lines = [];
                   let start = 0;
                   formation.forEach(count => {
-                    lines.push(players.slice(start, start + count));
+                    lines.push(playersPos.slice(start, start + count));
                     start += count;
                   });
 
                   const displayLines = teamIndex === 1 ? [...lines].reverse() : lines;
 
                   // Fix: Find player's photo from full player list
-                  const findPlayerPhoto = (team, id) => {
-
-                    // const found = team.players.find(p => p.player.id === id);
-                    // return found ? found.player.photo : null;
+                  const findPlayerPhoto = (playerId) => {
+                    console.log(players)
+                    for (const team of players) {
+                      const match = team.players.find(p => p.player.id === playerId);
+                      if (match) return match.player.photo;
+                    }
+                    return 'https://via.placeholder.com/40'; // fallback image
                   };
+
+
+
+
 
                   return (
                     <div key={teamIndex} className={`team-side team-${teamIndex} flex flex-col items-center gap-2`}>
@@ -329,19 +325,19 @@ const FixtureDetails = () => {
                         <>
                           <div className="line flex justify-center gap-1 mb-2">
                             <img
-                              src={findPlayerPhoto(team, goalkeeper.id)}
+                              src={findPlayerPhoto(goalkeeper.id)} height={40}
                               alt={goalkeeper.name}
-                              className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover border-2 border-blue-500"
+                              className=" rounded-circle p-1"
                             />
                           </div>
                           {displayLines.map((line, i) => (
                             <div key={i} className="line flex justify-center gap-1 mb-2">
                               {line.map(player => (
                                 <img
-                                  key={player.id}
-                                  src={findPlayerPhoto(team, player.id)}
+                                  key={player.id} height={40}
+                                  src={findPlayerPhoto(player.id)}
                                   alt={player.name}
-                                  className="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover border border-blue-400"
+                                  className=" rounded-circle p-1"
                                 />
                               ))}
                             </div>
@@ -353,19 +349,19 @@ const FixtureDetails = () => {
                             <div key={i} className="line flex justify-center gap-1 mb-2">
                               {line.map(player => (
                                 <img
-                                  key={player.id}
-                                  src={findPlayerPhoto(team, player.id)}
+                                  key={player.id} height={40}
+                                  src={findPlayerPhoto(player.id)}
                                   alt={player.name}
-                                  className="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover border border-red-400"
+                                  className=" rounded-circle p-1"
                                 />
                               ))}
                             </div>
                           ))}
                           <div className="line flex justify-center gap-1 mt-2">
                             <img
-                              src={findPlayerPhoto(team, goalkeeper.id)}
+                              src={findPlayerPhoto(goalkeeper.id)} height={40}
                               alt={goalkeeper.name}
-                              className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover border-2 border-red-500"
+                              className="rounded-circle p-1"
                             />
                           </div>
                         </>
@@ -381,12 +377,12 @@ const FixtureDetails = () => {
 
 
         {activeTab === 'players' && players?.length === 2 && (
-          <div className="football-events-table"  style={{marginBottom:'6rem'}}>
+          <div className="football-events-table" style={{ marginBottom: '6rem' }}>
             <div className="d-flex flex-wrap justify-content-between gap-3">
               {/* Left Team */}
               <div className="team-section" style={{ flex: '1 1 48%' }}>
                 <div className="bg-dark d-flex align-items-center mb-2 p-2 w-100">
-                  <img src={players[0].team.logo} alt={players[0].team.name} width="24" className="me-2" />
+                  <img src={players[0].team.logo} alt={players[0].team.name} width="24" className="me-2" loading="lazy" />
                   <p className="m-0 text-neon">{players[0].team.name}</p>
                 </div>
                 <div className="table-responsive">
@@ -448,7 +444,7 @@ const FixtureDetails = () => {
 
 
         {activeTab === 'statistics' && (
-          <div className="football-events-table"  style={{marginBottom:'6rem'}}>
+          <div className="football-events-table" style={{ marginBottom: '6rem' }}>
             {statistics?.length === 2 && (
               <div className="stats-comparison w-100">
                 {statistics[0].statistics.map((stat, idx) => {
