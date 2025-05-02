@@ -50,7 +50,7 @@ const FixturesPage = () => {
       <div className="d-flex justify-content-between mb-3">
         <input
           type="text"
-          className="form-control w-50"
+          className="form-control w-100"
           placeholder="Search team or league..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}

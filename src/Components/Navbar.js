@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useEffect} from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ChevronLeft } from 'lucide-react';
 import logo from '../3.png'
@@ -6,6 +6,26 @@ import logo from '../3.png'
 
 export default function Navbar() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Add GTranslate settings to window
+    window.gtranslateSettings = {
+      default_language: "en",
+      languages: ["en", "ar" ],
+      wrapper_selector: ".gtranslate_wrapper",
+    };
+
+    // Create and append script
+    const script = document.createElement("script");
+    script.src = "https://cdn.gtranslate.net/widgets/latest/dropdown.js";
+    script.defer = true;
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script); // Cleanup on unmount
+    };
+  }, []);
+
 
 
   return (
@@ -15,19 +35,8 @@ export default function Navbar() {
           <div className="d-flex flex-row align-items-center" >
             <p onClick={() => navigate(-1)} className="p-2 m-0"><ChevronLeft /></p>
             <img width={90} src={logo} />
-            {/* <a className="navbar-brand" >Dream Sports</a> */}
           </div>
-          {/* <button 
-          className="navbar-toggler" 
-          type="button" 
-          data-bs-toggle="collapse" 
-          data-bs-target="#navbarSupportedContent" 
-          aria-controls="navbarSupportedContent" 
-          aria-expanded="false" 
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button> */}
+       
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
@@ -37,15 +46,18 @@ export default function Navbar() {
                 <a className="nav-link" href="#">Dashboard</a>
               </li>
 
+              <li className="nav-item">
+                <a className="nav-link" href="#">Dashboard</a>
+              </li>
+
 
             </ul>
-            <form className="d-flex" role="search">
 
-              <button className="btn btn-outline-primary" type="submit">
-                Download App
-              </button>
-            </form>
+        
           </div>
+
+          <div className="gtranslate_wrapper"></div>
+
         </div>
       </nav>
     </section>

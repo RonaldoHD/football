@@ -55,7 +55,7 @@
 body{
   background-color: var(--dark-blue);
   color: white;
-  font-family: monospace;
+  /* font-family: monospace; */
 
 }
 
@@ -408,6 +408,32 @@ h2 {
   }
 }
 
+
+.news-card{
+  padding: 10px 5px;
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.322);
+}
+
+.read-more{
+  border: 1px solid var(--text-red);
+  text-decoration: none;
+  color: var(--text-red)!important;
+  padding: 5px 10px;
+  font-size: 0.6rem;
+  border-radius: 5px;
+  float: right;
+  cursor: pointer;
+}
+
+.gt_selector{
+  background-color: var(--dark-blue);
+  height: 35px;
+  border: 1px solid rgba(255, 255, 255, 0.329);
+  color: white;
+  border-radius: 5px;
+  margin-right: 10px;
+}
 
 
 

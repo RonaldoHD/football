@@ -34,13 +34,37 @@ const FixtureDetails = () => {
       setLoadingFixture(false);
     };
 
+
+
     const fetchOdds = async () => {
       setLoadingOdds(true);
+
+      const url = `https://api-football-v1.p.rapidapi.com/v3/odds?fixture=${fixture_id}`;
+      const options = {
+        method: 'GET',
+        headers: {
+          'x-rapidapi-key': '59a8fb1369mshb1757809560a70fp1fd523jsn406a21445909',
+          'x-rapidapi-host': 'api-football-v1.p.rapidapi.com'
+        }
+      };
+
+      try {
+        const response = await fetch(url, options);
+        const result = await response.json();
+        console.log(result);
+        setOdds(result.response)
+      } catch (error) {
+        console.error(error);
+      }
+
+
+
       try {
         const response = await fetch(`https://your-odds-api.com/fixture/${fixture_id}`, {
           method: 'GET',
           headers: {
-            'Authorization': 'Bearer YOUR_ODDS_API_KEY' // Example
+            'x-rapidapi-key': '59a8fb1369mshb1757809560a70fp1fd523jsn406a21445909', // Replace with your real key
+            'x-rapidapi-host': 'api-football-v1.p.rapidapi.com'
           }
         });
         const data = await response.json();
@@ -50,6 +74,9 @@ const FixtureDetails = () => {
       }
       setLoadingOdds(false);
     };
+
+
+
 
     fetchFixture();
     fetchOdds();
@@ -91,7 +118,7 @@ const FixtureDetails = () => {
                 {league.name} - {league.round}
                 {isLive && (
                   <span
-                    className="badge bg-danger ms-3"
+                    className="badge bg-success ms-3"
                     style={{ animation: 'pulse 1s infinite' }}
                   >
                     🔴 LIVE
